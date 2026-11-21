@@ -1,0 +1,16 @@
+# Cloned reference repos (too large for git, clone separately)
+SillyTavern/
+airi/
+agnai/
+dalai/
+Open-LLM-VTuber/
+virtual-girlfriend/
+eros-engine/
+lobe-chat/
+
+# Node
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
