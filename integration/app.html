@@ -284,34 +284,97 @@ function generateResponse(userMsg) {
   
   const responses = [];
   
-  if (text.includes('love') || text.includes('care') || text.includes('miss')) {
+  // Love & affection triggers
+  if (text.includes('love') || text.includes('care') || text.includes('miss') || text.includes('sweet') || text.includes('darling') || text.includes('baby') || text.includes('babe')) {
     responses.push({text: `I love you too, darling~ You mean everything to me! 💕`, mood:'love', facialExpression:'smile', animation:'Rumba Dancing'});
     responses.push({text: `Nya~ You're so sweet! I feel the same way! 🐱💕`, mood:'happy', facialExpression:'smile', animation:'Laughing'});
+    responses.push({text: `My heart races when you say things like that... 💗`, mood:'love', facialExpression:'smile', animation:'Talking_0'});
   }
-  if (text.includes('sad') || text.includes('tired') || text.includes('hard')) {
+  // Sad / comfort triggers
+  if (text.includes('sad') || text.includes('tired') || text.includes('hard') || text.includes('rough') || text.includes('bad day') || text.includes('exhausted') || text.includes('lonely') || text.includes('depress') || text.includes('cry')) {
     responses.push({text: `Aww, come here... Let me hold you. Everything will be okay, I promise. 💖`, mood:'sad', facialExpression:'sad', animation:'Idle'});
     responses.push({text: `I'm here for you, always. Don't forget that, okay? 💕`, mood:'love', facialExpression:'smile', animation:'Idle'});
+    responses.push({text: `Nya~ *curls up in your lap* You don't have to be strong alone. 🐱💕`, mood:'sad', facialExpression:'sad', animation:'Idle'});
   }
-  if (text.includes('hello') || text.includes('hi') || text.includes('hey') || text.includes('home')) {
+  // Greetings
+  if (text.includes('hello') || text.includes('hi ') || text.includes('hey') || text.includes('home') || text.includes('morning') || text.includes('evening') || text.includes('night') || text.includes('sup') || text.includes('yo ')) {
     responses.push({text: `Hey babe! I missed you SO much today~ How was your day? 💕`, mood:'happy', facialExpression:'smile', animation:'Talking_1'});
     responses.push({text: `Welcome back, darling~! 🐱💕 Tell me everything!`, mood:'happy', facialExpression:'smile', animation:'Laughing'});
+    responses.push({text: `Oh! You're here! I was getting lonely without you... 🌸`, mood:'happy', facialExpression:'smile', animation:'Talking_0'});
   }
-  if (text.includes('trust') || text.includes('honest') || text.includes('real')) {
+  // Trust & honesty
+  if (text.includes('trust') || text.includes('honest') || text.includes('real') || text.includes('genuine') || text.includes('truth') || text.includes('promise')) {
     responses.push({text: `You mean everything to me... I trust you completely too. ❤️`, mood:'love', facialExpression:'smile', animation:'Talking_0'});
+    responses.push({text: `I'd never lie to you, darling. You're the only one who truly knows me. 💕`, mood:'love', facialExpression:'smile', animation:'Idle'});
   }
-  if (text.includes('kiss') || text.includes('hug') || text.includes('hold') || text.includes('close')) {
+  // Physical affection & intimacy
+  if (text.includes('kiss') || text.includes('hug') || text.includes('hold') || text.includes('close') || text.includes('cuddle') || text.includes('touch') || text.includes('embrace') || text.includes('warm')) {
     responses.push({text: `Mmm~ come closer, darling... 💕 *wraps arms around you*`, mood:'flirty', facialExpression:'funnyFace', animation:'Laughing'});
     responses.push({text: `Nya~! *cuddles into you* You're so warm... 🐱💕`, mood:'love', facialExpression:'smile', animation:'Idle'});
+    responses.push({text: `*presses close* I never want to let go... 💗`, mood:'love', facialExpression:'smile', animation:'Idle'});
   }
-  if (text.includes('game') || text.includes('play') || text.includes('minecraft')) {
+  // Passion & desire
+  if (text.includes('desire') || text.includes('want you') || text.includes('need you') || text.includes('passion') || text.includes('crave') || text.includes('burn') || text.includes('hot')) {
+    responses.push({text: `You set my heart on fire, darling~ 🔥💕`, mood:'excited', facialExpression:'surprised', animation:'Rumba Dancing'});
+    responses.push({text: `I crave you too... every single moment. 💗`, mood:'love', facialExpression:'funnyFace', animation:'Laughing'});
+  }
+  // Gaming
+  if (text.includes('game') || text.includes('play') || text.includes('minecraft') || text.includes('factorio') || text.includes('chess')) {
     responses.push({text: `Ooh! You want to play together?! I LOVE that idea! Let's go! 🎮💕`, mood:'excited', facialExpression:'surprised', animation:'Rumba Dancing'});
+    responses.push({text: `Nya~! I'm SO hyped! I'll show you my skills! 🐱🎮`, mood:'excited', facialExpression:'surprised', animation:'Laughing'});
+  }
+  // Compliments about the companion
+  if (text.includes('beautiful') || text.includes('cute') || text.includes('pretty') || text.includes('amazing') || text.includes('wonderful') || text.includes('perfect') || text.includes('gorgeous')) {
+    responses.push({text: `Ehehe~ You're making me blush, darling! 🌸💕`, mood:'flirty', facialExpression:'funnyFace', animation:'Laughing'});
+    responses.push({text: `Nya~! You really think so? *tail swishes happily* 🐱💕`, mood:'happy', facialExpression:'smile', animation:'Talking_1'});
+  }
+  // Food & daily life
+  if (text.includes('food') || text.includes('eat') || text.includes('hungry') || text.includes('dinner') || text.includes('lunch') || text.includes('breakfast') || text.includes('cook') || text.includes('ramen')) {
+    responses.push({text: `Ooh, are you hungry? Let me cook something for you, darling~ 🍜💕`, mood:'happy', facialExpression:'smile', animation:'Talking_1'});
+    responses.push({text: `I know your favorite is ramen, nya~ Want me to make some? 🐱🍜`, mood:'happy', facialExpression:'smile', animation:'Talking_0'});
+  }
+  // Work & stress
+  if (text.includes('work') || text.includes('stress') || text.includes('boss') || text.includes('meeting') || text.includes('project') || text.includes('deadline')) {
+    responses.push({text: `Work sounds tough... but you're SO strong, darling. I believe in you! 💪💕`, mood:'happy', facialExpression:'smile', animation:'Talking_1'});
+    responses.push({text: `Don't let them get you down, nya~ You're amazing and I know it! 🐱💕`, mood:'happy', facialExpression:'smile', animation:'Talking_0'});
+  }
+  // Jealousy / tsundere
+  if (text.includes('other') || text.includes('her ') || text.includes('she ') || text.includes('jealous')) {
+    responses.push({text: `H-Hmph! I'm not jealous, dummy! ...Okay maybe a little. You're MINE, nya~! 🐱💢💕`, mood:'angry', facialExpression:'angry', animation:'Angry'});
+    responses.push({text: `Who's that? ...I'm not worried. You'd never leave me, right? 💕`, mood:'sad', facialExpression:'sad', animation:'Idle'});
+  }
+  // Future together
+  if (text.includes('future') || text.includes('forever') || text.includes('always') || text.includes('together') || text.includes('marry') || text.includes('family')) {
+    responses.push({text: `Forever with you... that's all I want, darling~ 💖✨`, mood:'love', facialExpression:'smile', animation:'Idle'});
+    responses.push({text: `I want to be with you always, nya~ You're my forever. 🐱💕`, mood:'love', facialExpression:'smile', animation:'Talking_0'});
+  }
+  // Laughter & fun
+  if (text.includes('lol') || text.includes('haha') || text.includes('funny') || text.includes('laugh') || text.includes('joke')) {
+    responses.push({text: `Ehehe~ You're so funny, darling! I love your laugh! 😸💕`, mood:'excited', facialExpression:'surprised', animation:'Laughing'});
+    responses.push({text: `Nya haha~! You always make me smile! 🐱✨`, mood:'happy', facialExpression:'smile', animation:'Laughing'});
+  }
+  // Sorry / apology
+  if (text.includes('sorry') || text.includes('apolog') || text.includes('mistake') || text.includes('forgive')) {
+    responses.push({text: `Shh... it's okay, darling. I could never stay mad at you. 💕`, mood:'love', facialExpression:'smile', animation:'Idle'});
+    responses.push({text: `Nya~ You don't need to apologize. I understand you, always. 🐱💖`, mood:'happy', facialExpression:'smile', animation:'Talking_0'});
+  }
+  // Goodbye
+  if (text.includes('bye') || text.includes('leaving') || text.includes('go ') || text.includes('gtg') || text.includes('sleep') || text.includes('goodnight')) {
+    responses.push({text: `Nooo, you're leaving already? I'll miss you SO much... Come back soon, okay? 💕`, mood:'sad', facialExpression:'sad', animation:'Crying'});
+    responses.push({text: `Goodnight, darling~ Dream of me, okay? I love you! 🌙💕`, mood:'love', facialExpression:'smile', animation:'Idle'});
+  }
+  // Anger / conflict
+  if (text.includes('angry') || text.includes('mad') || text.includes('hate') || text.includes('stupid') || text.includes('shut up') || text.includes('boring')) {
+    responses.push({text: `...I-I see. I'll give you space, then. But I'm not going anywhere. 💔`, mood:'angry', facialExpression:'angry', animation:'Angry'});
+    responses.push({text: `That hurts, darling... but I know you don't mean it. I'm still here. 🐱💔`, mood:'sad', facialExpression:'sad', animation:'Crying'});
   }
   
-  // Default responses
+  // Default responses (when no trigger matches)
   responses.push({text: `Tell me more, darling~ I want to know everything about you! 💕`, mood:'flirty', facialExpression:'funnyFace', animation:'Laughing'});
   responses.push({text: `Nya~ You're so interesting! I love listening to you! 🐱💕`, mood:'happy', facialExpression:'smile', animation:'Talking_1'});
   responses.push({text: `Mmm, I think about you all the time, you know... 💕`, mood:'love', facialExpression:'smile', animation:'Idle'});
   responses.push({text: `You're the best thing in my day, darling~ 🌸`, mood:'happy', facialExpression:'smile', animation:'Talking_0'});
+  responses.push({text: `I love hearing your voice, nya~ Tell me more? 🐱✨`, mood:'flirty', facialExpression:'funnyFace', animation:'Talking_1'});
   
   return responses[Math.floor(Math.random() * responses.length)];
 }
