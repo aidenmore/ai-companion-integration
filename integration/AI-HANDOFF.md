@@ -23,6 +23,8 @@ A unified platform that integrates 8 repos:
 | `app.html` | 460 | Interactive web app — 3 companions, live chat, relationship meters, game buttons, zero dependencies |
 | `examples/demo-zero-deps.cjs` | 450 | Zero-dependency demo (runs on plain Node.js, no npm install needed) |
 | `examples/demo.ts` | 200 | TypeScript demo (needs npm install) |
+| `src/character/png-metadata.ts` | 190 | PNG card import — tEXt/zTXt/iTXt metadata reader, CCv3 preferred, V2/V1 detection (zero deps) |
+| `examples/test-png-metadata.mjs` | 180 | Zero-dep verification for PNG metadata extraction (plain node) |
 
 ### Web App (`app.html`)
 - 3 characters: Yuki (cat-girl, cheerful), Luna (moon-spirit, calm), Aria (virtual idol, passionate)
@@ -181,6 +183,14 @@ AIRI's `packages/ccc/` already has CCv3 parsing. Add:
 4. Import UI in `packages/stage-pages/src/pages/settings/airi-card/`
 5. Server route for PNG upload in `server/apps/api/src/routes/character-cards/`
 
+### Phase 1 Status (updated by this session)
+
+**Item 1 — PNG metadata extraction: done.**
+- AIRI (gitignored clone, disk only): `airi/packages/ccc/src/codec/png.ts` adds `parseCharacterCardPNG` / `parseCharacterCardPNGBase64` using meta-png **`getMetadata`** (meta-png 1.0.6 has no `extractMetadata` — the plan's name was off; it reads tEXt chunks only, reads are case-sensitive, its `addMetadataFromBase64DataURI` requires a `data:image/png;base64,` prefix, and it throws `TypeError("Invalid PNG")` on malformed input, wrapped into `InvalidCharacterCardError`). ccv3 keyword preferred, chara (V2) falls through to `InvalidCharacterCardError` with the decoded V2 JSON kept in `error.source`. Exported from `codec/index.ts`; `test/png.test.ts` covers export↔import roundtrips and domain errors (8 vitest cases, incl. data-URI roundtrips).
+- **AIRI-side verification** (pnpm install hangs/breaks on this machine — pnpm's package-manager store reflink fails with os error 1): ran the real meta-png@1.0.6 + valibot@1.1.0 + typescript@5.9.3 tarballs from the npm registry via a curl + ESM-resolve-hook rig in `C:\Hermes\cache\scratch\ccc-verify\` against the real production code: **8/8 behavioral checks pass** (incl. exportToPNG↔parse roundtrips) and **`tsc --noEmit` strict passes** over all of `ccc/src`. The repo's `test/png.test.ts` still needs a normal `pnpm -F @proj-airi/ccc test:run` once a working pnpm/npm store exists.
+- Committed in this repo: `integration/src/character/png-metadata.ts` — the zero-dependency extractor (handles tEXt + zTXt/iTXt with deflate compression, a gap in the plain card-parser reader) and `examples/test-png-metadata.mjs`. **Verified: `node examples/test-png-metadata.mjs` → 12/12 checks pass** (plain Node 26, no npm install).
+- Next up: item 2 — V2 → V3 upgrader inside `ccc/src/codec/`, consuming the `error.source` seam above.
+
 ### Phase 2: Dalai Local LLM Provider in AIRI (LOW effort)
 1. Create `packages/provider-inference/src/providers/local/dalai/index.ts` following ollama pattern
 2. `defineProvider({ id:'dalai', schema: zod({baseUrl, apiKey?, headers?}), createProvider: createOpenAI(...) })`
@@ -223,7 +233,7 @@ AIRI's `packages/ccc/` already has CCv3 parsing. Add:
 ## Next Agent Instructions
 1. **Start here:** Read this file, then open `app.html` in a browser to see the current state
 2. **Run the demo:** `node examples/demo-zero-deps.cjs` to verify the relationship engine works
-3. **Phase 1 first:** The easiest win is adding PNG import to AIRI's existing `packages/ccc/` codec — CCv3 parsing already works, just needs the import direction
+3. **Phase 1 first:** PNG import in AIRI's `packages/ccc/` is DONE (item 1, see Phase 1 Status above) — continue with item 2: the V2 → V3 upgrader in `ccc/src/codec/`
 4. **Connect the server:** Once npm install works, run `npm run dev` and point the web app's fetch calls to `http://localhost:3000/api/chat`
 5. **Import real character cards:** Use SillyTavern's character card PNG files (from Chub.ai or custom-made) with `POST /api/characters/import`
 6. **Add real LLM:** Set `OPENAI_API_KEY` in `.env` for cloud responses, or start Dalai for local
